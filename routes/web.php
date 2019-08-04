@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,6 +12,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/contatos', 'ContatosController@indexView')->name('indexView');
+Route::get('/contatos/create', 'ContatosController@create');
+Route::get('/mensagens', 'MensagensController@indexView')->name('indexView');
+Route::get('/mensagens/create', 'MensagensController@create');
