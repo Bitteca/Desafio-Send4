@@ -9,9 +9,8 @@
                        <div class="col-sm-9">
                         <form action="/api/mensagens" method="POST">
                             <div class="form-group">
-                                <label>Contato da Mensagem:</label>
-                                </br>
-                                <select class="form-control mb-3" id="contatos" name="contato"></select>
+                                <label>Mensagem para {{$contato}}:</label>
+                                <input name="contato_id" type="hidden" value="{{$contato_id}}">
                                 <textarea name="mensagem" cols="30" rows="3" class="form-control"></textarea>
                                 <input type="submit" class="mt-2 btn btn-success float-right" value="Salvar">
                             </div>
@@ -26,18 +25,6 @@
 
 @section('javascript')
     <script type="text/javascript">
-        function carregaContatos(){
-            $.getJSON('/api/contatos', function(data){
-                for (let i = 0; i < data.length; i++) {
-                    let opcao = '<option value ="'+ data[i].id +'">' + data[i].nome + ' ' +  data[i].sobrenome + '</option>';
-                    $('#contatos').append(opcao);
-
-                }
-            });
-        }
-        $(function() {
-            carregaContatos();
-        })
 
     </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contato;
+use App\Mensagem;
 
 class ContatosController extends Controller
 {
@@ -34,6 +35,13 @@ class ContatosController extends Controller
         return view('contatos.novo_contato');
     }
 
+    public function mensagens($id)
+    {
+        $mensagens = Mensagem::where('contato_id', $id)->get();
+        $contato = Contato::find($id);
+        return view('mensagens.lista_mensagens', ['mensagens' => $mensagens, 'contato' => $contato->nome, 'id' => $id]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -48,7 +56,7 @@ class ContatosController extends Controller
         $contato->email = $request->input('email');
         $contato->telefone = $request->input('telefone');
         $contato->save();
-        return $this->indexView();
+        return json_encode($contato);
     }
 
     /**
@@ -59,7 +67,8 @@ class ContatosController extends Controller
      */
     public function show($id)
     {
-        //
+        $contato = Contato::find($id);
+        return json_encode($contato);
     }
 
     /**
@@ -82,7 +91,18 @@ class ContatosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contato = Contato::find($id);
+        if (isset($contato)) {
+            $contato->nome = $request->input('nome');
+            $contato->sobrenome = $request->input('sobrenome');
+            $contato->email = $request->input('email');
+            $contato->telefone = $request->input('telefone');
+            $contato->save();
+            return json_encode($contato);
+        }else {
+            return response('Nao encontrado', 404);
+        }
+
     }
 
     /**

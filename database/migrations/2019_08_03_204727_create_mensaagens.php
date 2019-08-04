@@ -17,7 +17,7 @@ class CreateMensaagens extends Migration
             $table->bigIncrements('id');
             $table->string('descricao');
             $table->unsignedBigInteger('contato_id');
-            $table->foreign('contato_id')->references('id')->on('contatos');
+            $table->foreign('contato_id')->references('id')->on('contatos')->onDelete('cascade');
             $table->timestamps();
         });
     }

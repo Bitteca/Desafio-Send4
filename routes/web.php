@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContatosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/contatos', 'ContatosController@indexView')->name('indexView');
 Route::get('/contatos/create', 'ContatosController@create');
 Route::get('/mensagens', 'MensagensController@indexView')->name('indexView');
-Route::get('/mensagens/create', 'MensagensController@create');
+Route::get('/mensagens/create/{id}', 'MensagensController@create');
+Route::get('/contatos/{id}/mensagens', 'ContatosController@mensagens');
+Route::get('/mensagens/edit', 'MensagensController@editView');

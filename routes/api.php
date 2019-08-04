@@ -15,5 +15,3 @@ use App\Http\Controllers\ContatosController;
 */
 Route::resource('contatos', 'ContatosController');
 Route::resource('mensagens', 'MensagensController');
-Route::get('indexJson', 'ContatosController@indexJson');
-Route::get('mensagensFiltradas/{contato_id}', 'ContatosController@mensagensFiltradas');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Mensagem;
+use App\Contato;
 
 class MensagensController extends Controller
 {
@@ -23,21 +24,16 @@ class MensagensController extends Controller
         return json_encode($mensagens);
     }
 
-    public function mensagensFiltradas($contato_id)
-    {
-        $mensagens = Mensagem::where('contato_id', '=', $contato_id);
-        return json_encode($mensagens);
-    }
-
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('mensagens.nova_mensagem');
+        $contato = Contato::find($id);
+        return view('mensagens.nova_mensagem', ["contato_id" => $id, 'contato' => $contato->nome]);
     }
 
     /**
@@ -50,9 +46,11 @@ class MensagensController extends Controller
     {
         $mensagem = new Mensagem();
         $mensagem->descricao = $request->input('mensagem');
-        $mensagem->contato_id = $request->input('contato');
+        $mensagem->contato_id = $request->input('contato_id');
         $mensagem->save();
-        return $this->indexView();
+        $mensagens = Mensagem::where('contato_id', $mensagem->contato_id)->get();
+        $contato = Contato::find($mensagem->contato_id);
+        return view('mensagens.lista_mensagens', ['mensagens' => $mensagens, 'contato' => $contato->nome, 'id' => $mensagem->contato_id]);
     }
 
     /**
@@ -74,7 +72,13 @@ class MensagensController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mensagem = Mensagem::find($id);
+        return json_encode($mensagem);
+    }
+
+    public function editView()
+    {
+        return view('mensagens.alterar_mensagem');
     }
 
     /**
@@ -97,6 +101,7 @@ class MensagensController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $mensagem = Mensagem::where('id', $id)->delete();
+        return response('OK', 200);
     }
 }

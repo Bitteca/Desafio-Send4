@@ -26,9 +26,6 @@
             <div class="col-sm-3 mt-4">
                 <ul class="list-group">
                 <li class="list-group-item"><a class="text-dark" href="/contatos">Todos os Contatos</a></li>
-                <li class="list-group-item"><a class="text-dark" href="/contatos/create">Novo contato</a></li>
-                <li class="list-group-item"><a class="text-dark" href="/mensagens">Todas as Mensagens</a></li>
-                <li class="list-group-item"><a class="text-dark" href="/mensagens/create">Nova Mensagen</a></li>
                 </ul>
             </div>
     @yield('conteudo')
